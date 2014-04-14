@@ -33,42 +33,34 @@ public class SeamCarver {
 We will use the dual gradient energy function: The energy of pixel (x, y) is Δx2(x, y) + Δy2(x, y), where the square of the x-gradient Δx2(x, y) = Rx(x, y)2 + Gx(x, y)2 + Bx(x, y)2, and where the central differences Rx(x, y), Gx(x, y), and Bx(x, y) are the absolute value in differences of red, green, and blue components between pixel (x + 1, y) and pixel (x − 1, y). The square of the y-gradient Δy2(x, y) is defined in an analogous manner. We define the energy of pixels at the border of the image to be 2552 + 2552 + 2552 = 195075.
 As an example, consider the 3-by-4 image with RGB values (each component is an integer between 0 and 255) as shown in the table below.
 
+
   (255, 101, 51)  	(255, 101, 153)  	(255, 101, 255)  
   (255,153,51)  	  (255,153,153)  	  (255,153,255)  
   (255,203,51)  	  (255,204,153)  	  (255,205,255)  
   (255,255,51)  	  (255,255,153)  	  (255,255,255)  
 
+
 The ten border pixels have energy 195075. Only the pixels (1, 1) and (1, 2) are nontrivial. We calculate the energy of pixel (1, 2):
+
 
 Rx(1, 2) = 255 − 255 = 0, 
 Gx(1, 2) = 205 − 203 = 2, 
 Bx(1, 2) = 255 − 51 = 204, 
 yielding Δx2(1, 2) = 22 + 2042 = 41620.
 
+
 Ry(1, 2) = 255 − 255 = 0, 
 Gy(1, 2) = 255 − 153 = 102, 
 By(1, 2) = 153 − 153 = 0, 
 yielding Δy2(1, 2) = 1022 = 10404.
 
+
 Thus, the energy of pixel (1, 2) is 41620 + 10404 = 52024. Similarly, the energy of pixel (1, 1) is 2042 + 1032 = 52225.
 
- 195075.0 	 195075.0  195075.0 
- 195075.0 	 52225.0 	 195075.0 
- 195075.0 	 52024.0 	 195075.0 
- 195075.0 	 195075.0  195075.0 
 
-Finding a vertical seam. The findVerticalSeam() method returns an array of length H such that entry x is the column number of the pixel to be removed from row x of the image. For example, consider the 6-by-5 image below (supplied as 6x5.png).
-
- ( 97, 82,107) 	 (220,172,141) 	 (243, 71,205) 	 (129,173,222) 	 (225, 40,209) 	 ( 66,109,219) 
- (181, 78, 68) 	 ( 15, 28,216) 	 (245,150,150) 	 (177,100,167) 	 (205,205,177) 	 (147, 58, 99) 
- (196,224, 21) 	 (166,217,190) 	 (128,120,162) 	 (104, 59,110) 	 ( 49,148,137) 	 (192,101, 89) 
- ( 83,143,103) 	 (110, 79,247) 	 (106, 71,174) 	 ( 92,240,205) 	 (129, 56,146) 	 (121,111,147) 
- ( 82,157,137) 	 ( 92,110,129) 	 (183,107, 80) 	 ( 89, 24,217) 	 (207, 69, 32) 	 (156,112, 31) 
-
-In this case, the method findVerticalSeam() should return the array { 2, 3, 3, 3, 2 }.
+Finding a vertical seam. The findVerticalSeam() method returns an array of length H such that entry x is the column number of the pixel to be removed from row x of the image. 
 
 Finding a horizontal seam. The behavior of findHorizontalSeam() is analogous to that of findVerticalSeam() except that it should return an array of length W such that entry y is the row number of the pixel to be removed from column y of the image.
-
 
 Exceptions.
 
